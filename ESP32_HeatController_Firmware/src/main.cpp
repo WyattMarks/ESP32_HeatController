@@ -47,6 +47,7 @@ float PID_perror = 0;
 float currentTemperature = 0;
 bool relayState = 0;
 float goalTemperature = 100;
+bool running = false;
 
 int PID_Control(float goal, float current) {
     float error = goal - current;
@@ -106,16 +107,24 @@ void data_request() {
     String response = "{\"temperature\":";
     response += String(currentTemperature);
     response += ", \"relay\":";
-    response += relayState ? "true}" : "false}";
+    response += relayState ? "true" : "false";
+    response += ", \"running\":";
+    response += running ? "true}" : "false}";
     server.send(200, "application/json", response); 
 }
 
-void setTemperature() {
+void temperature_post() {
     String arg = server.arg("temperature");
     if (VERBOSE) {
         Serial.print("Set Temp: "); Serial.println(arg);
     }
     goalTemperature = arg.toFloat();
+}
+
+void power_request() {
+    running = !running;
+    String response = running ? "on" : "off";
+    Serial.print("Turning "); Serial.println(running ? "on!" : "off!"); 
 }
 
 void setup() {
@@ -134,7 +143,8 @@ void setup() {
 
     server.on("/", index_request);
     server.on("/temperature", data_request);
-    server.on("/set", HTTP_POST, setTemperature);
+    server.on("/set", HTTP_POST, temperature_post);
+    server.on("/power", power_request);
     server.begin();
 }
 
@@ -145,27 +155,31 @@ void loop(){
     server.handleClient();
 
     //Temperature Control
-    if (currentTime - previousTime_TR >= SAMPLE_PERIOD) {
-        double temp = readTemperature(THERMISTOR);
-        if (VERBOSE) {
-            Serial.print("Calculated Temperature: "); Serial.println(temp);
-        }
-
-        if (PID_Control(goalTemperature, temp)) {
-            digitalWrite(RELAY, HIGH);
-            if (!relayState) {
-                Serial.println("Relay On");
-                relayState = 1;
+    if (running) {
+        if (currentTime - previousTime_TR >= SAMPLE_PERIOD) {
+            double temp = readTemperature(THERMISTOR);
+            if (VERBOSE) {
+                Serial.print("Calculated Temperature: "); Serial.println(temp);
             }
-        } else {
-            digitalWrite(RELAY, LOW);
-            if (relayState) {
-                Serial.println("Relay Off");
-                relayState = 0;
-            }
-        }
 
-        currentTemperature = temp;
-        previousTime_TR = currentTime;
+            if (PID_Control(goalTemperature, temp)) {
+                digitalWrite(RELAY, HIGH);
+                if (!relayState) {
+                    Serial.println("Relay On");
+                    relayState = 1;
+                }
+            } else {
+                digitalWrite(RELAY, LOW);
+                if (relayState) {
+                    Serial.println("Relay Off");
+                    relayState = 0;
+                }
+            }
+
+            currentTemperature = temp;
+            previousTime_TR = currentTime;
+        }
+    } else {
+        digitalWrite(RELAY, LOW);
     }
 }

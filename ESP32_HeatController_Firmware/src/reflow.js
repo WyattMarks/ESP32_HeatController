@@ -10,7 +10,7 @@ var chart = new Highcharts.Chart({
         name: 'Relay On',
         showInLegend: true,
         data: [],
-        color: '#c21919'
+        color: '#c23b22'
     }],
     plotOptions: {
         line: { animation: true,
@@ -48,9 +48,8 @@ setInterval(function ( ) {
 
 var slider = document.getElementById("setTemperature");
 var output = document.getElementById("slideOutput");
-output.innerHTML = slider.value; // Display the default slider value
+output.innerHTML = slider.value;
 
-// Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
     output.innerHTML = this.value;
 
@@ -65,3 +64,24 @@ slider.oninput = function() {
     var params = "temperature=" + this.value
     xhttp.send(params);
 } 
+
+var button = document.getElementById("turnonbutton");
+button.innerHTML = "Turn on"
+button.addEventListener('click', (e => {
+    e.preventDefault();
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == "on") {
+                button.style = 'background: #c23b22;';
+                button.innerHTML = "Turn off"
+            } else {
+                button.style = 'background: #059e8a;';
+                button.innerHTML = "Turn on"
+            }
+        }
+    };
+    xhttp.open("GET", "/power", true);
+    xhttp.send();
+}));

@@ -5,23 +5,23 @@ min-width: 310px;
 margin: 0 auto;
 }
 h2 {
-    font-family: Arial;
+    font-family: Lato, Arial, sans-serif;
     font-size: 2.5rem;
     text-align: center;
 }
 
 h4 {
-    font-family: Arial;
+    font-family: Lato, Arial, sans-serif;
     font-size: 1.5rem;
     text-align: center;
 }
 
 .slidecontainer {
     width: 100%; /* Width of the outside container */
-  }
-  
-  /* The slider itself */
-  .slider {
+}
+
+/* The slider itself */
+.slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
     width: 100%; /* Full-width */
@@ -31,26 +31,53 @@ h4 {
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
-  }
-  
-  /* Mouse-over effects */
-  .slider:hover {
+}
+
+/* Mouse-over effects */
+.slider:hover {
     opacity: 1; /* Fully shown on mouse-over */
-  }
-  
-  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-  .slider::-webkit-slider-thumb {
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
     background: #04AA6D; /* Green background */
     cursor: pointer; /* Cursor on hover */
-  }
-  
-  .slider::-moz-range-thumb {
+}
+
+.slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
     background: #04AA6D; /* Green background */
     cursor: pointer; /* Cursor on hover */
-  }
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    background: #059e8a;
+    box-shadow: 0 3px 2px 0 rgba(0,0,0,0.1);
+    border-radius: 5px;
+    height: 45px;
+    padding: 0 30px;
+    color: #fff;
+    font-family: Lato, Arial, sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background .3s, transform .3s, box-shadow .3s;
+    will-change: transform;
+}
+
+.button:hover {
+    background: darken(#059e8a,10%);
+    box-shadow: 0 4px 17px rgba(0,0,0,0.2);
+    transform: translate3d(0, -2px, 0);
+}
+
+.button:active {
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);
+    transform: translate3d(0, 1px, 0);
+}
