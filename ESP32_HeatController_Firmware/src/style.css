@@ -55,6 +55,12 @@ h4 {
     cursor: pointer; /* Cursor on hover */
 }
 
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .button {
     display: inline-flex;
     align-items: center;

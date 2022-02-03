@@ -12,7 +12,10 @@ const char landing_page_html[] PROGMEM = R"=====(
     <div id="chart-temperature" class="container"></div>
     <div class="slide-container">
         <input type="range" min="1" max="300" value="100" class="slider" id="setTemperature">
-        <h4>Set Temperature: <span id="slideOutput"></span></h4>
+        <h4>Set Temperature: <span id="slideOutput"></span>°C</h4>
+    </div>
+    <div class="button-container">
+        <a href="#" class="button" id="turnonbutton"></a>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/gh/WyattMarks/ESP32_HeatController/ESP32_HeatController_Firmware/src/reflow.js"></script>

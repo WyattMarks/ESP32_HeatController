@@ -125,6 +125,7 @@ void power_request() {
     running = !running;
     String response = running ? "on" : "off";
     Serial.print("Turning "); Serial.println(running ? "on!" : "off!"); 
+    server.send(200, "text/plain", response); 
 }
 
 void setup() {
@@ -181,5 +182,6 @@ void loop(){
         }
     } else {
         digitalWrite(RELAY, LOW);
+        relayState = 0;
     }
 }
