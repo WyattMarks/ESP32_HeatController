@@ -46,6 +46,7 @@ float PID_perror = 0;
 
 float currentTemperature = 0;
 bool relayState = 0;
+float goalTemperature = 100;
 
 int PID_Control(float goal, float current) {
     float error = goal - current;
@@ -106,7 +107,13 @@ void data_request() {
     response += String(currentTemperature);
     response += ", \"relay\":";
     response += relayState ? "true}" : "false}";
-    server.send(200, "text/plane", response); 
+    server.send(200, "application/json", response); 
+}
+
+void setTemperature() {
+    String arg = server.arg("temperature");
+    Serial.print("SET TEMP: "); Serial.println(arg);
+    goalTemperature = arg.toFloat();
 }
 
 void setup() {
@@ -125,6 +132,7 @@ void setup() {
 
     server.on("/", index_request);
     server.on("/temperature", data_request);
+    server.on("/set", HTTP_POST, setTemperature);
     server.begin();
 }
 
@@ -141,7 +149,7 @@ void loop(){
             Serial.print("Calculated Temperature: "); Serial.println(temp);
         }
 
-        if (PID_Control(100.0, temp)) {
+        if (PID_Control(goalTemperature, temp)) {
             digitalWrite(RELAY, HIGH);
             if (!relayState) {
                 Serial.println("Relay On");

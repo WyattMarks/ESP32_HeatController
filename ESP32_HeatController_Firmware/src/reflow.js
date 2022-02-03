@@ -23,8 +23,10 @@ var chart = new Highcharts.Chart({
     yAxis: {
         title: { text: 'Temperature (Celsius)' },
         max: 300
-    }
-});
+    },
+    credits: {
+        enabled: false
+    }});
 
 setInterval(function ( ) {
     var xhttp = new XMLHttpRequest();
@@ -51,4 +53,13 @@ output.innerHTML = slider.value; // Display the default slider value
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
   output.innerHTML = this.value;
+
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //console.log("success")
+        }
+    };
+    xhttp.open("POST", "/set", true);
+    xhttp.send("temperature=" + this.responseText);
 } 
