@@ -112,7 +112,9 @@ void data_request() {
 
 void setTemperature() {
     String arg = server.arg("temperature");
-    Serial.print("SET TEMP: "); Serial.println(arg);
+    if (VERBOSE) {
+        Serial.print("Set Temp: "); Serial.println(arg);
+    }
     goalTemperature = arg.toFloat();
 }
 

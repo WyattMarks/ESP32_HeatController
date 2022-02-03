@@ -62,5 +62,6 @@ slider.oninput = function() {
     };
     xhttp.open("POST", "/set", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send("temperature=" + this.value);
+    var params = "temperature=" + this.value
+    xhttp.send(params);
 } 
