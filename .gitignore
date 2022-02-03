@@ -1,0 +1,5 @@
+ESP32_HeatController_Firmware/.pio
+ESP32_HeatController_Firmware/.vscode/*
+.vscode/*
+ESP32_HeatController-backups/
+GERBER/
