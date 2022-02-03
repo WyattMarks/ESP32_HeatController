@@ -52,14 +52,15 @@ output.innerHTML = slider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-  output.innerHTML = this.value;
+    output.innerHTML = this.value;
 
-  var xhttp = new XMLHttpRequest();
+    var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             //console.log("success")
         }
     };
     xhttp.open("POST", "/set", true);
-    xhttp.send("temperature=" + this.responseText);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send("temperature=" + this.value);
 } 

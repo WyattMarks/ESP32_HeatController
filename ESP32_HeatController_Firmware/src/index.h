@@ -11,7 +11,7 @@ const char landing_page_html[] PROGMEM = R"=====(
     <h2>ESP32 Reflow Plate</h2>
     <div id="chart-temperature" class="container"></div>
     <div class="slide-container">
-        <input type="range" min="1" max="100" value="50" class="slider" id="setTemperature">
+        <input type="range" min="1" max="300" value="100" class="slider" id="setTemperature">
         <h4>Set Temperature: <span id="slideOutput"></span></h4>
     </div>
 </body>
