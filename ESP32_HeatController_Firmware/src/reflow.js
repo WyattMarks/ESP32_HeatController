@@ -63,7 +63,7 @@ setInterval(function ( ) {
             s.addPoint({x: d, y: data.temperature}, true, s.data.length > 80, true);
 
             s = chart.series[1]
-            s.addPoint({x: d, y: data.relay ? parseInt(slider.value) : 0}, true, s.data.length > 80, true);
+            s.addPoint({x: d, y: data.running ? parseInt(slider.value) : 0}, true, s.data.length > 80, true);
 
             s = chart.series[2]
             s.addPoint({x: d, y: data.relay ? 75 : 0}, true, s.data.length > 80, true);
